@@ -29,6 +29,7 @@ class ShowModaloption extends StatelessWidget {
         title: Text('Mis cetificados'),
         onTap: () {
           navigatePop(context, false);
+          navigateToCertificate(context, true);
         },
       ),
       ListTile(
