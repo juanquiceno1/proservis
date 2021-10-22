@@ -26,6 +26,7 @@ class _EjecutivoCuentaScreenState extends State<EjecutivoCuentaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _content(context)
     );
   }
