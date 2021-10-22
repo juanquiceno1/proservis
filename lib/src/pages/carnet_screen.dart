@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:proservis/src/pages/Widget/show_modal.dart';
+import 'package:proservis/src/utils/routes/navigation.dart';
 import 'package:sizer/sizer.dart';
+import 'Widget/tarjeta.dart';
 
 class CarnetScreen extends StatelessWidget {
   static const String routeName = 'carnet_screen';
@@ -16,7 +19,10 @@ class CarnetScreen extends StatelessWidget {
     child: Column(
       children: [
         _appbar(context),
-        _card(context),
+        Tarjeta(
+          image: 'assets/Logo-Proservis.png', 
+          child: _information(context),
+        ),
         SizedBox(height: 10.h,)
       ],
     ),
@@ -43,97 +49,18 @@ class CarnetScreen extends StatelessWidget {
             )
           ),
           IconButton(
-            onPressed: (){}, 
+            onPressed: (){
+              showModalBottomSheet(
+                context: context,
+                builder: (context) => ShowModaloption()
+              );
+            }, 
             icon: Icon(
               Icons.more_vert_rounded,
               color: Colors.green,
-              // size: 15,
+              size: 20.sp,
             )
           )
-        ],
-      ),
-    ),
-  );
-
-  Widget _card(BuildContext context) => Padding(
-    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-    child: Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-      color: Colors.white,
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50.0),
-                    topRight: Radius.circular(50.0)
-                  )
-                ),
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 5.h,
-                    bottom: 10.h
-                  ),
-                  child: Image.asset(
-                    'assets/Logo-Proservis.png',
-                    height: 12.h,
-                    width: 12.h,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: 20.h
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 13.h,
-                        width: 13.h,
-                        padding: EdgeInsets.all(3),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(100)
-                        ),
-                        child: Container(
-                          padding: EdgeInsets.all(3),
-                          decoration: BoxDecoration(
-                            // color: Colors.green,
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: <Color>[
-                                Colors.green,
-                                Colors.green,
-                                Colors.white,
-                                Colors.white
-                              ]
-                            ),
-                            borderRadius: BorderRadius.circular(100)
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.asset(
-                              'assets/woman.png',
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          _information(context),
-          SizedBox(height: 5.h)
         ],
       ),
     ),
