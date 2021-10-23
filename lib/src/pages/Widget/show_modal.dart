@@ -58,6 +58,7 @@ class ShowModaloption extends StatelessWidget {
         title: Text('Reporde incapacidad'),
         onTap: () {
           navigatePop(context, false);
+          navigateToDisabilityreport(context, true);
         },
       ),
     ],
