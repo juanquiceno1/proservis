@@ -5,6 +5,7 @@ import 'tarjeta_descricion.dart';
 
 
 class HistorialIncapacidad extends StatefulWidget {
+  // final List<DescripcionModel> data
   @override
   _HistorialIncapacidadState createState() => _HistorialIncapacidadState();
 }
