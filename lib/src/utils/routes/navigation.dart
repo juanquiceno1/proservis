@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proservis/src/pages/accident_screen.dart';
 import 'package:proservis/src/pages/carnet_screen.dart';
 import 'package:proservis/src/pages/certificados_screen.dart';
 import 'package:proservis/src/pages/ejecutivo_cuenta_screen.dart';
@@ -37,4 +38,11 @@ navigateToDisabilityreport(BuildContext context, bool remplaced) => remplaced
       return ReporteIncapacidadScreen();
     }), (Route route) => false)
   : Navigator.of(context).pushNamed(ReporteIncapacidadScreen.routeName);
+
+navigateToAccident(BuildContext context, bool remplaced) => remplaced
+  ? Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (BuildContext contextt) {
+      return AccidentScreen();
+    }), (Route route) => false)
+  : Navigator.of(context).pushNamed(AccidentScreen.routeName);
   

@@ -3,43 +3,21 @@ import 'package:proservis/src/models/descripcion_tarjeta_model.dart';
 import 'package:sizer/sizer.dart';
 import 'tarjeta_descricion.dart';
 
-class HistorialIncapacidad extends StatefulWidget {
-  // final List<DescripcionModel> data
+class Historial extends StatefulWidget {
+  final List<Map<String, dynamic>> historial;
+  const Historial({Key? key, required this.historial}) : super(key: key);
   @override
-  _HistorialIncapacidadState createState() => _HistorialIncapacidadState();
+  _HistorialState createState() => _HistorialState();
 }
 
-class _HistorialIncapacidadState extends State<HistorialIncapacidad> {
+class _HistorialState extends State<Historial> {
 
   late DescripcionList _card;
-  final List<Map<String, dynamic>> _data = [
-    // {
-    //   'image': 'incapacidad.png',
-    //   'title': 'Informe de Incapacidad',
-    //   'description': '4 de Abril 2020',
-    //   'size': '473 KB',
-    //   'download': 'Comprobante de Pago'
-    // },
-    // {
-    //   'image': 'incapacidad.png', 
-    //   'title': 'Informe de Incapacidad',
-    //   'description':'4 de Abril 2020',
-    //   'size': '473 KB',
-    //   'download': 'Certificado Ingresos y Retenciones'
-    // },
-    // {
-    //   'image': 'incapacidad.png',
-    //   'title': 'Informe de Incapacidad',
-    //   'description': '473 KB',
-    //   'size': '473 KB',
-    //   'download': 'Seguridad Social',
-    // }
-  ];
   
   @override
   void initState() {
     try {
-      _card = DescripcionList.fromJson(_data);
+      _card = DescripcionList.fromJson(widget.historial);
     } catch (e) {
       _card = [] as DescripcionList;
     }

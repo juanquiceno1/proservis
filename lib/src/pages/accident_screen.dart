@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:proservis/src/pages/Widget/description_image.dart';
-import 'package:proservis/src/pages/Widget/new_incapacity.dart';
 import 'package:sizer/sizer.dart';
+
+import 'Widget/description_image.dart';
 import 'Widget/historial.dart';
+import 'Widget/new_accident.dart';
 import 'Widget/show_modal.dart';
 
-class ReporteIncapacidadScreen extends StatefulWidget {
-  static const String routeName = 'reporte_incapacidad_screen';
-  const ReporteIncapacidadScreen();
-
+class AccidentScreen extends StatefulWidget {
+  static const String routeName = 'accident_screen';
+  const AccidentScreen();
   @override
-  _ReporteIncapacidadScreenState createState() => _ReporteIncapacidadScreenState();
+  _AccidentScreenState createState() => _AccidentScreenState();
 }
 
-class _ReporteIncapacidadScreenState extends State<ReporteIncapacidadScreen> {
+class _AccidentScreenState extends State<AccidentScreen> {
 
   bool _option = true;
-  final List<Map<String, dynamic>> _data = [
+  final List<Map<String, dynamic>> _historial = [
     {
       'image': 'incapacidad.png',
       'title': 'Informe de Incapacidad',
@@ -31,15 +31,8 @@ class _ReporteIncapacidadScreenState extends State<ReporteIncapacidadScreen> {
       'size': '473 KB',
       'download': 'Certificado Ingresos y Retenciones'
     },
-    {
-      'image': 'incapacidad.png',
-      'title': 'Informe de Incapacidad',
-      'description': '473 KB',
-      'size': '473 KB',
-      'download': 'Seguridad Social',
-    }
   ];
-
+  
   @override
   void initState() {
     super.initState();
@@ -51,11 +44,9 @@ class _ReporteIncapacidadScreenState extends State<ReporteIncapacidadScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _content(context),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    body: _content(context)
+  );
 
   Widget _content(BuildContext context) => SingleChildScrollView(
     child: Column(
@@ -64,9 +55,9 @@ class _ReporteIncapacidadScreenState extends State<ReporteIncapacidadScreen> {
         _body(context),
         SizedBox(height: 15.sp,),
         _option
-        ?NewIncapacity()
+        ?NewAccident()
         :Historial(
-          historial: _data,
+          historial: _historial,
         )
       ],
     ),
@@ -83,7 +74,7 @@ class _ReporteIncapacidadScreenState extends State<ReporteIncapacidadScreen> {
           ),
           Expanded(
             child: Text(
-              'Reportar Incapacidad',
+              'Reportar Accidente',
               style: TextStyle(
                 fontSize: 18.sp,
                 color: Colors.grey,
