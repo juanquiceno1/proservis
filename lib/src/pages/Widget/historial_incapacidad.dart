@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proservis/src/models/descripcion_tarjeta_model.dart';
-
+import 'package:sizer/sizer.dart';
 import 'tarjeta_descricion.dart';
-
 
 class HistorialIncapacidad extends StatefulWidget {
   // final List<DescripcionModel> data
@@ -14,27 +13,27 @@ class _HistorialIncapacidadState extends State<HistorialIncapacidad> {
 
   late DescripcionList _card;
   final List<Map<String, dynamic>> _data = [
-    {
-      'image': 'incapacidad.png',
-      'title': 'Informe de Incapacidad',
-      'description': '4 de Abril 2020',
-      'size': '473 KB',
-      'download': 'Comprobante de Pago'
-    },
-    {
-      'image': 'incapacidad.png', 
-      'title': 'Informe de Incapacidad',
-      'description':'4 de Abril 2020',
-      'size': '473 KB',
-      'download': 'Certificado Ingresos y Retenciones'
-    },
-    {
-      'image': 'incapacidad.png',
-      'title': 'Informe de Incapacidad',
-      'description': '473 KB',
-      'size': '473 KB',
-      'download': 'Seguridad Social',
-    }
+    // {
+    //   'image': 'incapacidad.png',
+    //   'title': 'Informe de Incapacidad',
+    //   'description': '4 de Abril 2020',
+    //   'size': '473 KB',
+    //   'download': 'Comprobante de Pago'
+    // },
+    // {
+    //   'image': 'incapacidad.png', 
+    //   'title': 'Informe de Incapacidad',
+    //   'description':'4 de Abril 2020',
+    //   'size': '473 KB',
+    //   'download': 'Certificado Ingresos y Retenciones'
+    // },
+    // {
+    //   'image': 'incapacidad.png',
+    //   'title': 'Informe de Incapacidad',
+    //   'description': '473 KB',
+    //   'size': '473 KB',
+    //   'download': 'Seguridad Social',
+    // }
   ];
   
   @override
@@ -55,8 +54,27 @@ class _HistorialIncapacidadState extends State<HistorialIncapacidad> {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      for (DescripcionModel item in _card.data) 
-        TarjetaDescripcion(data: item,)
+      if( _card.data.isNotEmpty)
+        for (DescripcionModel item in _card.data) 
+          TarjetaDescripcion(data: item,)
+      else
+        Column(
+          children: [
+            Image.asset(
+              'assets/nodata.png',
+              height: 40.h,
+              width: 70.w,
+            ),
+            Text(
+              'No Hay Informes',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold
+              ),
+            )
+          ],
+        )
     ],
   );
 }

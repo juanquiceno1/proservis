@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -25,8 +26,17 @@ class _NewIncapacityState extends State<NewIncapacity> {
   DateTime _selecteddatesend = DateTime.now();
   TimeOfDay _selectedtime = TimeOfDay.now();
 
-  bool _isfile = false;
   bool _isChecked = false;
+  List<String> _itemsdrop =  [
+    'Apple','Banana','Grapes','Orange','watermelon','Pineapple',
+    '1Apple','1Banana','1Grapes','1Orange','1watermelon','1Pineapple',
+    '2Apple','2Banana','2Grapes','2Orange','2watermelon','2Pineapple',
+    '3Apple','3Banana','3Grapes','3Orange','3watermelon','3Pineapple',
+    '4Apple','4Banana','4Grapes','4Orange','4watermelon','4Pineapple',
+    '5Apple','5Banana','5Grapes','5Orange','5watermelon','5Pineapple',
+    '6Apple','6Banana','6Grapes','6Orange','6watermelon','6Pineapple',
+  ];
+  var _items;
 
   Color _getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -114,11 +124,6 @@ class _NewIncapacityState extends State<NewIncapacity> {
                 _timeController,
                 () async{
                   final TimeOfDay? selected = await _selectTime(context);
-                  // await showTimePicker(
-                  //   context: context, 
-                  //   initialTime: _selectedtime,
-                  // );
-                  print('====');
                   if (selected != null /* && selected != _selectedtime */)
                   setState(() {
                     _selectedtime = selected;
@@ -184,6 +189,7 @@ class _NewIncapacityState extends State<NewIncapacity> {
             
           }
         ),
+        SizedBox(height: 10.sp,),
         _descriptionform(
           context, 
           'Descripcion Escribe aca lo sucedido. Maximo 500 caracteres.',
@@ -193,7 +199,7 @@ class _NewIncapacityState extends State<NewIncapacity> {
               
           }
         ),
-
+        SizedBox(height: 10.sp,),
         GestureDetector(
           onTap: () async {
             FilePickerResult? _result = await FilePicker.platform.pickFiles(
@@ -201,59 +207,62 @@ class _NewIncapacityState extends State<NewIncapacity> {
               allowedExtensions: ['jpg', 'png','pdf', 'doc'],
             );
             // FilePickerResult? result = await FilePicker.platform.pickFiles();
-
             if (_result != null) {
-              _isfile = true;
               PlatformFile file = _result.files.first;
-
               print(file.name);
               print(file.bytes);
               print(file.size);
               print(file.extension);
               print(file.path);
             } else {
-              _isfile = false;
               print('sin nada');
               // User canceled the picker
             }
           },
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 20.sp),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              color: Colors.green[50]
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Adjunta Documentos',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.bold
+          child: DottedBorder(
+            color: Colors.green,
+            strokeWidth: 1,
+            dashPattern: [5],
+            radius: Radius.circular(50),
+            borderType: BorderType.RRect,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 20.sp),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.green[50]
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Adjunta Documentos',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.bold
+                          ),
                         ),
-                      ),
-                      Text(
-                        '(jpg, png, pdf, doc)',
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontSize: 8.sp,
-                          fontWeight: FontWeight.bold
-                        ),
-                      )
-                    ],
+                        Text(
+                          '(jpg, png, pdf, doc)',
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 8.sp,
+                            fontWeight: FontWeight.bold
+                          ),
+                        )
+                      ],
+                    )
+                  ),
+                  Image.asset(
+                    'assets/load-file.png',
+                    height: 22.sp,
                   )
-                ),
-                Image.asset(
-                  'assets/load-file.png',
-                  height: 22.sp,
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -342,21 +351,20 @@ class _NewIncapacityState extends State<NewIncapacity> {
   Widget _textformpoint(BuildContext context, /* FocusNode focus, */ String description, 
   String icon, TextEditingController controller ,VoidCallback funtion) => Padding(
     padding: EdgeInsets.symmetric(vertical:5.sp),
-    child: TextFormField(
-      // focusNode: focus,
-      controller: controller,
-      onTap: funtion,
-      readOnly: false,
-      textCapitalization: TextCapitalization.sentences,
-      obscureText: false,
-      keyboardType: TextInputType.text,
-      textInputAction: TextInputAction.done,
-      onFieldSubmitted: (value) {
-        
+    child: DropdownButtonFormField(
+
+      items: _itemsdrop.map((String item) {
+        return new DropdownMenuItem(
+          value: item,
+          child: Text(item),
+        );
+      }).toList(),
+      onChanged: (newValue) {
+        // do other stuff with _item
+        setState(() => _items = newValue);
       },
-      style: TextStyle(color: Colors.black, fontSize: 11.sp),
-      cursorColor: Colors.green,
-      decoration:InputDecoration(
+      value: _items,
+      decoration: InputDecoration(
         fillColor: Colors.green[50],
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 5.sp),
@@ -368,16 +376,6 @@ class _NewIncapacityState extends State<NewIncapacity> {
         ),
         prefixIconConstraints: BoxConstraints(
           maxHeight: 20.sp
-        ),
-        suffixIcon: IconButton(
-          onPressed: (){
-
-          },
-          icon: Icon(
-            Icons.keyboard_arrow_down_rounded, 
-            color: Colors.grey,
-            size: 24.0,
-          ),
         ),
         labelText: description,
         labelStyle: TextStyle(
@@ -393,14 +391,6 @@ class _NewIncapacityState extends State<NewIncapacity> {
         enabledBorder: outline(50, 1, Colors.green),
         focusedErrorBorder: outline(50, 1, Colors.green)
       ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return '$description Requerido';
-        } else {
-          return null;
-        }
-      },
-      onSaved: (value) {},
     ),
   );
 
